@@ -13,22 +13,26 @@ export default function Header({ home }: Props) {
     <>
       {home ? (
         <S.Header home>
-          <Link to={'/'}>
-            <Logo />
-          </Link>
+          <Container>
+            <Link to={'/'}>
+              <Logo />
+            </Link>
 
-          <S.HeaderTitle>
-            Viva experiências gastronômicas no conforto da sua casa
-          </S.HeaderTitle>
+            <S.HeaderTitle>
+              Viva experiências gastronômicas no conforto da sua casa
+            </S.HeaderTitle>
+          </Container>
         </S.Header>
       ) : (
         <>
           <S.Header>
-            <S.HeaderPerfil>Restaurantes</S.HeaderPerfil>
-            <Link to={'/'}>
-              <Logo />
-            </Link>
-            <S.HeaderPerfil>0 produto(s) no carrinho</S.HeaderPerfil>
+            <Container>
+              <S.HeaderPerfil>Restaurantes</S.HeaderPerfil>
+              <Link to={'/'}>
+                <Logo />
+              </Link>
+              <S.HeaderPerfil>0 produto(s) no carrinho</S.HeaderPerfil>
+            </Container>
           </S.Header>
           <S.ImageContainer>
             <Container>

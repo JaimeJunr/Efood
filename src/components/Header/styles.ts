@@ -5,6 +5,8 @@ import Italiana from '../../assets/Images/Italiana.png'
 import { Colors } from '../../styles'
 import { Props } from './index'
 
+import { Container } from '../../styles'
+
 type Title = {
   category?: boolean
 }
@@ -12,18 +14,20 @@ type Title = {
 export const Header = styled.header<Props>`
   width: 100%;
   height: ${props => (props.home ? '328px' : '186px')};
-
-  display: flex;
-  flex-direction: ${props => (props.home ? 'column' : 'row')};
-  align-items: center;
-  justify-content: ${props => (props.home ? 'space-between' : 'space-around')};
-
   background: url(${Back});
 
-  svg {
-    width: 125px;
-    margin-top: ${props => (props.home ? '50px' : '0')};
-    height: 57.5px;
+  ${Container} {
+    height: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: ${props => (props.home ? 'column' : 'row')};
+    justify-content: space-between;
+
+    svg {
+      width: 125px;
+      margin-top: ${props => (props.home ? '50px' : '0')};
+      height: 57.5px;
+    }
   }
 `
 
@@ -75,7 +79,7 @@ export const ImageContainer = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
+    background-color: rgba(0, 0, 0, 0.5);
   }
 `
 export const RestaurantTitle = styled.h2<Title>`

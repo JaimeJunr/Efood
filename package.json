@@ -10,13 +10,8 @@
     "test": "jest",
     "clean": "rm -rf dist/*",
     "lint": "eslint .",
-<<<<<<< HEAD
-    "update-deps": "ncu -u && pnpm install",
-    "audit": "pnpm audit"
-=======
     "update-deps": "ncu -u && npm install",
     "audit": "npm audit"
->>>>>>> de1256f (Initial commit first layout)
   },
   "keywords": [],
   "author": "",

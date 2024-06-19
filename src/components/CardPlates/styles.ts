@@ -1,9 +1,10 @@
 import { styled } from 'styled-components'
 import { Colors } from '../../styles'
 import { TagContain } from '../Tag/styles'
-import { Link } from 'react-router-dom'
+import { Button } from '@mui/base/Button'
 
-export const Card = styled.div`
+export const Card = styled.li`
+  list-style: none;
   position: relative;
   background-color: ${Colors.red};
   color: ${Colors.white};
@@ -34,16 +35,36 @@ export const Description = styled.p`
   line-height: 22px;
 `
 
-export const Button = styled(Link)`
-  text-decoration: none;
+export const TriggerButton = styled(Button)`
   display: block;
-  padding: 4px 0;
-  background-color: ${Colors.white};
-  border: transparent;
   width: 100%;
+  padding: 4px 0;
+
+  background-color: ${Colors.minRed};
+  border: transparent;
 
   color: ${Colors.red};
   text-align: center;
+  text-decoration: none;
   font-size: 14px;
   font-weight: 700;
+  line-height: 16px;
+
+  transition: all 150ms ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.01);
+    background: ${Colors.lightGray};
+    color: ${Colors.maxRed};
+  }
+
+  &:active {
+    background: ${Colors.gray};
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 4px ${Colors.red};
+    outline: none;
+  }
 `

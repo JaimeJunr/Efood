@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import Back from '../../assets/Images/Vector.png'
-import Italiana from '../../assets/Images/Italiana.png'
+
 import { Colors } from '../../styles'
 import { Props } from './index'
 
@@ -27,6 +27,13 @@ export const Header = styled.header<Props>`
       width: 125px;
       margin-top: ${props => (props.home ? '50px' : '0')};
       height: 57.5px;
+
+      cursor: pointer;
+      transition: all 0.1s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
     }
   }
 `
@@ -57,7 +64,7 @@ export const HeaderPerfil = styled.h2`
 
   color: ${Colors.red};
 `
-export const ImageContainer = styled.div`
+export const ImageContainer = styled.div<Props>`
   div {
     display: flex;
     flex-direction: column;
@@ -67,7 +74,7 @@ export const ImageContainer = styled.div`
 
   width: 100%;
   height: 280px;
-  background-image: url(${Italiana});
+  background-image: url(${props => props.restaurant?.capa});
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;

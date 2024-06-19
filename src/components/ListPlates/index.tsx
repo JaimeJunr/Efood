@@ -1,42 +1,37 @@
-import CardPlates from '../CardPlates'
 import * as S from './styles'
-import { Link } from 'react-router-dom'
 
-import Pizza from '../../assets/Images/Pizza.png'
+import { MenuItem, Restaurant } from '../../models/Restaurant'
 
-export default function ListPlates() {
+import CardPlates from '../CardPlates'
+import ModalProduct from '../Modal'
+import { useState } from 'react'
+
+type Props = {
+  restaurant: Restaurant
+}
+
+export default function ListPlates({ restaurant }: Props) {
+  const [product, setProduct] = useState<MenuItem>()
+  const [open, setOpen] = useState(false)
+
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
   return (
-    <S.List>
-      <CardPlates
-        image={Pizza}
-        title='Pizza Marguerita'
-        description='A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-      />
-      <CardPlates
-        image={Pizza}
-        title='Pizza Marguerita'
-        description='A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-      />
-      <CardPlates
-        image={Pizza}
-        title='Pizza Marguerita'
-        description='A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-      />
-      <CardPlates
-        image={Pizza}
-        title='Pizza Marguerita'
-        description='A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-      />
-      <CardPlates
-        image={Pizza}
-        title='Pizza Marguerita'
-        description='A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-      />
-      <CardPlates
-        image={Pizza}
-        title='Pizza Marguerita'
-        description='A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!'
-      />
-    </S.List>
+    <>
+      <S.List>
+        {restaurant.cardapio.map((item, index) => (
+          <CardPlates
+            key={index}
+            product={item}
+            onOpenModal={handleOpen}
+            setCurrectProduct={setProduct} // Passa função para abrir o modal
+          />
+        ))}
+      </S.List>
+      {product && (
+        <ModalProduct open={open} onClose={handleClose} product={product} />
+      )}
+    </>
   )
 }

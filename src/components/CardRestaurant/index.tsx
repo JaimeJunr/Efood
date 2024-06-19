@@ -1,42 +1,45 @@
 import Tag from '../Tag'
 import * as S from './styles'
-
 import Star from '../../assets/Svg/Estrela.svg'
+import { Restaurant } from '../../models/Restaurant'
+import { Link } from 'react-router-dom'
 
-type Props = {
-  title: string
-  category: string
-  highlight?: boolean
-  description: string
-  score: string
-  image: string
+const getDescription = (description: string) => {
+  if (description.length > 250) {
+    return description.slice(0, 250) + '...'
+  }
+  return description
 }
 
-export default function CardRestaurant({
-  title,
-  category,
-  description,
-  highlight,
-  image,
-  score,
-}: Props) {
+export const CardRestaurant = ({
+  tipo,
+  descricao,
+  destacado,
+  id,
+  capa,
+  avaliacao,
+  cardapio,
+  titulo,
+}: Restaurant) => {
   return (
     <S.Card>
-      <img src={image} alt={category} />
+      <img src={capa} alt={tipo} />
       <S.CardBody>
         <S.Head>
-          <S.Title>{title}</S.Title>
+          <S.Title>{titulo}</S.Title>
           <div>
-            <S.Score>{score}</S.Score>
+            <S.Score>{avaliacao}</S.Score>
             <Star />
           </div>
         </S.Head>
         <S.Infos>
-          {highlight ? <Tag>Destaque da semana</Tag> : null}
-          <Tag>{category}</Tag>
+          {destacado ? <Tag>Destaque da semana</Tag> : null}
+          <Tag>{tipo}</Tag>
         </S.Infos>
-        <S.Description>{description}</S.Description>
-        <S.Button to={'/perfil'}>Saiba Mais</S.Button>
+        <S.Description>{getDescription(descricao)}</S.Description>
+        <S.Button>
+          <Link to={`/perfil/${id}`}>Saiba mais</Link>
+        </S.Button>
       </S.CardBody>
     </S.Card>
   )

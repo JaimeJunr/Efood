@@ -1,16 +1,26 @@
-import Footer from '../components/Footer'
+import { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import List from '../components/ListRestaurant'
-import { Container, GlobalStyles } from '../styles'
+import ListRestaurant from '../components/ListRestaurant'
+import { Container } from '../styles'
+import { Restaurant } from '../models/Restaurant'
 
 export default function Home() {
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([])
+
+  useEffect(() => {
+    fetch('https://fake-api-tau.vercel.app/api/efood/restaurantes')
+      .then(response => response.json())
+      .then(data => {
+        setRestaurants(data)
+      })
+  }, [])
+
   return (
     <>
       <Header home />
       <Container>
-        <List />
+        <ListRestaurant restaurants={restaurants} />
       </Container>
-      <Footer />
     </>
   )
 }

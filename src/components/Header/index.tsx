@@ -3,12 +3,14 @@ import * as S from './styles'
 import Logo from '../../assets/Svg/Efood.svg'
 import { Link } from 'react-router-dom'
 import { Container } from '../../styles'
+import { Restaurant } from '../../models/Restaurant'
 
 export type Props = {
   home?: boolean
+  restaurant?: Restaurant
 }
 
-export default function Header({ home }: Props) {
+export default function Header({ home, restaurant }: Props) {
   return (
     <>
       {home ? (
@@ -17,7 +19,6 @@ export default function Header({ home }: Props) {
             <Link to={'/'}>
               <Logo />
             </Link>
-
             <S.HeaderTitle>
               Viva experiências gastronômicas no conforto da sua casa
             </S.HeaderTitle>
@@ -34,10 +35,10 @@ export default function Header({ home }: Props) {
               <S.HeaderPerfil>0 produto(s) no carrinho</S.HeaderPerfil>
             </Container>
           </S.Header>
-          <S.ImageContainer>
+          <S.ImageContainer restaurant={restaurant}>
             <Container>
-              <S.RestaurantTitle category>Italiana</S.RestaurantTitle>
-              <S.RestaurantTitle>La Dolce Vita Trattoria</S.RestaurantTitle>
+              <S.RestaurantTitle category>{restaurant?.tipo}</S.RestaurantTitle>
+              <S.RestaurantTitle>{restaurant?.titulo}</S.RestaurantTitle>
             </Container>
           </S.ImageContainer>
         </>

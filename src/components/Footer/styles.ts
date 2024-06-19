@@ -18,6 +18,13 @@ export const Footer = styled.footer`
     width: 125px;
     margin-top: 40px;
     height: 57.5px;
+
+    cursor: pointer;
+    transition: all 0.1s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 `
 export const HeadFooter = styled.div`
@@ -39,6 +46,13 @@ export const SocialMedia = styled.div`
     width: 24px;
     height: 24px;
     margin: 0;
+
+    cursor: pointer;
+    transition: all 0.1s ease;
+
+    &:hover {
+      transform: scale(1.2);
+    }
   }
 `
 

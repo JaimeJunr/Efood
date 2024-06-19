@@ -3,7 +3,8 @@ import { Colors } from '../../styles'
 import { TagContain } from '../Tag/styles'
 import { Link } from 'react-router-dom'
 
-export const Card = styled.div`
+export const Card = styled.li`
+  list-style: none;
   position: relative;
   background-color: ${Colors.white};
   color: ${Colors.red};
@@ -60,18 +61,26 @@ export const Description = styled.p`
   margin-top: 16px;
   line-height: 22px;
 `
-export const Button = styled(Link)`
-  text-decoration: none;
+export const Button = styled.button`
   background-color: ${Colors.red};
   border: transparent;
   padding: 4px 6px;
-  width: 90px;
 
-  color: ${Colors.white};
-  text-align: center;
-  font-size: 14px;
-  font-family: 'Roboto';
-  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.1s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    background: ${Colors.maxRed};
+  }
+
+  a {
+    text-decoration: none;
+    color: ${Colors.white};
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
 `
 export const Infos = styled.div`
   position: absolute;

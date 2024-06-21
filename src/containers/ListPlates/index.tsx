@@ -2,9 +2,9 @@ import * as S from './styles'
 
 import { MenuItem, Restaurant } from '../../models/Restaurant'
 
-import CardPlates from '../CardPlates'
-import ModalProduct from '../Modal'
 import { useState } from 'react'
+import CardPlates from '../../components/CardPlates'
+import ModalProduct from '../../components/Modal'
 
 type Props = {
   restaurant: Restaurant

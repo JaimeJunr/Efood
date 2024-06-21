@@ -1,8 +1,11 @@
-import Tag from '../Tag'
 import * as S from './styles'
+
+import Tag from '../Tag'
 import Star from '../../assets/Svg/Estrela.svg'
 import { Restaurant } from '../../models/Restaurant'
-import { Link } from 'react-router-dom'
+
+import Button from '../Button'
+import { Description, Title } from '../../styles'
 
 const getDescription = (description: string) => {
   if (description.length > 250) {
@@ -18,7 +21,6 @@ export const CardRestaurant = ({
   id,
   capa,
   avaliacao,
-  cardapio,
   titulo,
 }: Restaurant) => {
   return (
@@ -26,7 +28,7 @@ export const CardRestaurant = ({
       <img src={capa} alt={tipo} />
       <S.CardBody>
         <S.Head>
-          <S.Title>{titulo}</S.Title>
+          <Title>{titulo}</Title>
           <div>
             <S.Score>{avaliacao}</S.Score>
             <Star />
@@ -36,10 +38,10 @@ export const CardRestaurant = ({
           {destacado ? <Tag>Destaque da semana</Tag> : null}
           <Tag>{tipo}</Tag>
         </S.Infos>
-        <S.Description>{getDescription(descricao)}</S.Description>
-        <S.Button>
-          <Link to={`/perfil/${id}`}>Saiba mais</Link>
-        </S.Button>
+        <Description>{getDescription(descricao)}</Description>
+        <Button title='Saiba Mais' type='link' to={`/perfil/${id}`}>
+          Saiba mais
+        </Button>
       </S.CardBody>
     </S.Card>
   )

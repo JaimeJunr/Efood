@@ -45,7 +45,7 @@ export const Modal = styled(BaseModal)`
 export const Card = styled.div`
   position: relative;
   display: flex;
-  height: 225px;
+  height: 300px;
   margin: 0 auto;
   padding: 32px;
   background-color: ${Colors.red};
@@ -60,6 +60,10 @@ export const Card = styled.div`
 
   div {
     height: 100%;
+    button {
+      width: 250px;
+      height: 24px;
+    }
   }
 `
 

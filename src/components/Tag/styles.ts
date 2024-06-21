@@ -4,7 +4,6 @@ import { Colors } from '../../styles'
 import { Props } from '.'
 
 export const TagContain = styled.div<Props>`
-  height: 14px;
   background-color: ${Colors.red};
   padding: 4px 6px;
   display: inline-block;

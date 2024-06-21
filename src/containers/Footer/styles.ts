@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import Back from '../../assets/Images/Vector.png'
-import { Colors } from '../../styles'
+import { Colors, breakpoints } from '../../styles'
 
 export const Footer = styled.footer`
   width: 100%;
@@ -25,6 +25,10 @@ export const Footer = styled.footer`
     &:hover {
       transform: scale(1.05);
     }
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    justify-content: space-around;
   }
 `
 export const HeadFooter = styled.div`
@@ -54,6 +58,10 @@ export const SocialMedia = styled.div`
       transform: scale(1.2);
     }
   }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    margin-top: 24px;
+  }
 `
 
 export const FooterDescription = styled.p`
@@ -69,4 +77,8 @@ export const FooterDescription = styled.p`
   text-align: center;
 
   color: ${Colors.red};
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 70%;
+  }
 `

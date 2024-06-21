@@ -2,6 +2,10 @@ import * as S from './styles'
 import { MenuItem } from '../../models/Restaurant'
 
 import Fade from '@mui/material/Fade'
+import { formatPrice } from '../../App'
+import Button from '../Button'
+import { add } from '../../store/reducers/cartSlice'
+import { useDispatch } from 'react-redux'
 
 export type PropsModal = {
   open: boolean
@@ -9,14 +13,9 @@ export type PropsModal = {
   product: MenuItem
 }
 
-export const formatPrice = (preco = 0) => {
-  return new Intl.NumberFormat('pt-br', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(preco)
-}
-
 export default function ModalProduct({ open, onClose, product }: PropsModal) {
+  const dispatch = useDispatch()
+
   if (!product) return null
 
   return (
@@ -37,9 +36,14 @@ export default function ModalProduct({ open, onClose, product }: PropsModal) {
               {product.descricao}
             </S.Description>
             <S.Description>Serve {product.porcao}</S.Description>
-            <S.ButtonBuy>
+
+            <Button
+              onClick={() => dispatch(add(product))}
+              title='Clique para adicionar ao carrinho'
+              type='button'
+            >
               Adicionar ao carrinho - {formatPrice(product.preco)}
-            </S.ButtonBuy>
+            </Button>
           </div>
           <S.ClearIconS onClick={onClose} />
         </S.Card>

@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
 import * as S from './styles' // Assuming styles are correctly defined
 
 import { Restaurant } from '../../models/Restaurant'
-import { CardRestaurant } from '../CardRestaurant'
+import { CardRestaurant } from '../../components/CardRestaurant'
 
 type Props = {
   restaurants: Restaurant[]

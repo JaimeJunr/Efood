@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as S from './styles'
 import { MenuItem } from '../../models/Restaurant'
+import Button from '../Button'
+import { Description, Title } from '../../styles'
 
 type Props = {
   product: MenuItem
@@ -23,16 +25,18 @@ export default function CardPlates({
   return (
     <S.Card>
       <img src={product.foto} alt={product.nome} />
-      <S.Title>{product.nome}</S.Title>
-      <S.Description>{getDescription(product.descricao)}</S.Description>
-      <S.TriggerButton
+      <Title>{product.nome}</Title>
+      <Description>{getDescription(product.descricao)}</Description>
+      <Button
+        title='Clique para saber mais detalhes'
+        type='button'
         onClick={() => {
           onOpenModal()
           setCurrectProduct(product)
         }}
       >
         Mais Detalhes
-      </S.TriggerButton>
+      </Button>
     </S.Card>
   )
 }

@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "scripts": {
     "dev": "webpack --mode=development",
-    "build": "webpack --mode=production && tsc -p tsconfig.api.json",
+    "vercel-build": "webpack --mode=production && tsc -p tsconfig.api.json",
     "server": "node dist/api/index.js",
     "test": "jest",
     "clean": "rm -rf dist/*",

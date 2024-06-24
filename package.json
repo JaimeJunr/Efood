@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "webpack --mode=development",
     "build": "tsc",
-    "server": "webpack serve --mode=development",
+    "server": "node dist/api/index.js",
     "test": "jest",
     "clean": "rimraf dist/*",
     "lint": "eslint .",
     "update-deps": "ncu -u && npm install",
-    "dev-server": "nodemon --watch src --exec tsx src/api/index.ts",
+    "dev-server": "webpack serve --mode=development",
+    "dev-api-server": "nodemon --watch src --exec tsx src/api/index.ts",
     "start": "tsx src/api/index.ts"
   },
   "keywords": [],

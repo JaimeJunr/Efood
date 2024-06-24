@@ -15,9 +15,10 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
     devServer: {
+      historyApiFallback: true,
       static: {
         directory: path.join(__dirname, 'public'),
       },
@@ -32,13 +33,6 @@ module.exports = (env, argv) => {
           use: [
             {
               loader: 'babel-loader',
-              options: {
-                presets: [
-                  '@babel/preset-env',
-                  '@babel/preset-react',
-                  '@babel/preset-typescript',
-                ],
-              },
             },
             {
               loader: 'ts-loader',

@@ -1,14 +1,7 @@
 import * as S from './styles'
-import {
-  useState,
-  useEffect,
-  useRef,
-  ChangeEvent,
-  KeyboardEvent,
-  FormEvent,
-} from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useChat } from 'ai/react'
-import { useGetRestaurantsQuery } from '../../api/services/api'
+import { useGetRestaurantsQuery } from '../../services/api'
 
 import MessageSquare from '../../assets/Svg/message-square.svg'
 import Send from '../../assets/Svg/send.svg'

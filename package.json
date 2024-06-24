@@ -4,16 +4,14 @@
   "description": "",
   "main": "index.tsx",
   "scripts": {
-    "dev": "webpack --mode=development",
-    "vercel-build": "webpack --mode=production && tsc -p tsconfig.api.json",
-    "server": "node dist/api/index.js",
+    "vercel-build": "webpack --mode=production",
     "test": "jest",
     "clean": "rm -rf dist/*",
     "lint": "eslint .",
     "update-deps": "ncu -u && npm install",
+    "dev": "webpack --mode=development",
     "dev-server": "webpack serve --mode=production",
-    "dev-api-server": "nodemon --watch src --exec tsx src/api/index.ts",
-    "start": "tsx src/api/index.ts"
+    "dev-api-server": "nodemon --watch src --exec tsx src/api/index.ts"
   },
   "keywords": [],
   "author": "",

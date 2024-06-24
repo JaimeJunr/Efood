@@ -13,13 +13,7 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@models/*": ["models/*"],
-      "@components/*": ["components/*"],
-      "@styles": ["styles"]
-    }
+    "resolveJsonModule": true
   },
   "include": ["src/**/*", "src/api/services"],
   "exclude": ["node_modules"]

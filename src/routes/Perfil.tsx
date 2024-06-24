@@ -4,7 +4,7 @@ import ListPlates from '../containers/ListPlates'
 import { Container } from '../styles'
 import { useParams } from 'react-router-dom'
 
-import { useGetCurretRestaurantQuery } from '../services/api'
+import { useGetCurretRestaurantQuery } from '../api/services/api'
 
 export default function Perfil() {
   const { id } = useParams()

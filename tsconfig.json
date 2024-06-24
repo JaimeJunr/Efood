@@ -1,19 +1,20 @@
 {
   "files": ["globals.d.ts"],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "target": "ES5",
-    "allowJs": true,
+    "target": "ES6",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/api/services"],
+  "exclude": ["node_modules"]
 }

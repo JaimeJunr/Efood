@@ -5,7 +5,7 @@ import ListRestaurant from '../containers/ListRestaurant'
 
 import { Container } from '../styles'
 
-import { useGetRestaurantsQuery } from '../services/api'
+import { useGetRestaurantsQuery } from '../api/services/api'
 
 export default function Home() {
   const { data: restaurants } = useGetRestaurantsQuery()

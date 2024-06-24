@@ -1,7 +1,9 @@
 const path = require('path')
+
 const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
+
+const Dotenv = require('dotenv-webpack')
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production'
@@ -13,16 +15,16 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
     devServer: {
+      historyApiFallback: true,
       static: {
         directory: path.join(__dirname, 'public'),
       },
       compress: true,
       port: 9000,
     },
-
     module: {
       rules: [
         {
@@ -31,13 +33,6 @@ module.exports = (env, argv) => {
           use: [
             {
               loader: 'babel-loader',
-              options: {
-                presets: [
-                  '@babel/preset-env',
-                  '@babel/preset-react',
-                  '@babel/preset-typescript',
-                ],
-              },
             },
             {
               loader: 'ts-loader',
@@ -50,7 +45,7 @@ module.exports = (env, argv) => {
           use: ['@svgr/webpack'],
         },
         {
-          test: /\.(png|jpg?g|gif)$/i,
+          test: /\.(png|jpg|jpeg|gif)$/i, // Fix typo in file extension regex
           type: 'asset',
         },
       ],
@@ -73,10 +68,8 @@ module.exports = (env, argv) => {
             }
           : false,
       }),
+      new Dotenv(),
     ],
-    resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-    },
   }
 
   if (isProduction) {

@@ -9,6 +9,7 @@ import Footer from './containers/Footer'
 import Cart from './components/Cart'
 import { Provider } from 'react-redux'
 import { store } from './store'
+import ChatBox from './components/ChatBot'
 
 export const formatPrice = (preco = 0) => {
   return new Intl.NumberFormat('pt-br', {
@@ -29,6 +30,7 @@ export default function App() {
           </Routes>
           <Footer />
           <Cart />
+          <ChatBox />
         </BrowserRouter>
       </React.StrictMode>
     </Provider>

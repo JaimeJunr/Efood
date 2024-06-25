@@ -3,24 +3,21 @@ dotenv.config()
 
 import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
-import cors from 'cors'
+
 import {
   GoogleGenerativeAIProviderSettings,
   createGoogleGenerativeAI,
 } from '@ai-sdk/google'
-import { CoreMessage, streamText } from 'ai'
-import { Restaurant } from '../models/Restaurant'
+import {
+  CoreMessage,
+  streamText,
+  GoogleGenerativeAIStream,
+  generateText,
+} from 'ai'
+import { Restaurant } from './models/Restaurant'
 
 const app = express()
 const PORT = process.env.PORT || 3333
-
-app.use(
-  cors({
-    origin: 'http://localhost:9000',
-    methods: 'GET,POST',
-    allowedHeaders: 'Content-Type,Authorization',
-  }),
-)
 
 app.use(bodyParser.json())
 
@@ -37,55 +34,35 @@ const googleModel = googleGenerativeAI.languageModel(
   'models/gemini-1.5-flash-latest',
 )
 
-interface PredefinedPrompts {
-  [key: string]: string
-}
-
-const predefinedPrompts: PredefinedPrompts = {
-  'quais são os restaurantes em destaque da semana?':
-    'Os restaurantes em destaque esta semana são Bella Tavola Italiana e Jardim da Terra como uma otima opção vegana.',
-
-  'quais formas de pagamento são aceitas?':
-    'Aceitamos pagamento com cartão de crédito e débito das bandeiras Visa, MasterCard, e American Express. Além disso, também aceitamos pagamento via boleto bancário.',
-}
-
-const getPredefinedResponse = (content: string): string | null => {
-  const cleanedContent = content.toLowerCase().trim()
-  return predefinedPrompts[cleanedContent] || null
-}
-
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-
-const simulateTyping = async (response: string, res: Response) => {
-  for (let i = 0; i < response.length; i++) {
-    await delay(20)
-
-    res.write(response[i])
-  }
-}
-
 let restaurants: Restaurant[] = []
 
+// Função para buscar os restaurantes da API externa
 const fetchRestaurants = async () => {
   try {
     const res = await fetch(
       'https://fake-api-tau.vercel.app/api/efood/restaurantes',
     )
+    if (!res.ok) {
+      throw new Error('Failed to fetch restaurants')
+    }
     const data = await res.json()
     restaurants = data as Restaurant[]
-  } catch (error) {
-    console.error('Error fetching restaurants:', error)
+  } catch (error: any) {
+    console.error('Error fetching restaurants:', error.message)
   }
 }
 
-// Fetch restaurants
-try {
-  fetchRestaurants()
-} catch (error) {
-  console.error('Error fetching restaurants:', error)
-}
+// Iniciar a busca por restaurantes ao iniciar o servidor
+fetchRestaurants()
 
-app.post('/api/chatbot', async (req: Request, res: Response) => {
+app.get('/api', (req: Request, res: Response) => {
+  res.json({
+    ok: true,
+    message: 'API is running',
+  })
+})
+
+app.post('/api', async (req: Request, res: Response) => {
   try {
     const { messages }: { messages: CoreMessage[] } = req.body
 
@@ -104,13 +81,12 @@ app.post('/api/chatbot', async (req: Request, res: Response) => {
     }
 
     if (predefinedResponse) {
-      await simulateTyping(predefinedResponse, res)
-      res.end()
+      res.send(predefinedResponse)
       return
     }
 
     // Get the restaurants from the API
-    const response = await streamText({
+    const { text } = await generateText({
       model: googleModel,
       system: `Você é uma assistente de um e-commerce parecido com o Ifood, o nome do e-commerce é EFOOD.
       Não fale nada que não envolva nossos restaurantes e pratos.
@@ -135,54 +111,36 @@ app.post('/api/chatbot', async (req: Request, res: Response) => {
       temperature: 0,
     })
 
-    // console.log(`Você é uma assistente de um e-commerce parecido com o Ifood, o nome do e-commerce é EFOOD.
-    // Não fale nada que não envolva nossos restaurantes e pratos.
-    // Nossos restaurantes: ${restaurants
-    //   .map(restaurant => restaurant.titulo)
-    //   .join(', ')}.
-    // Os pratos: ${restaurants
-    //   .flatMap(restaurant =>
-    //     restaurant.cardapio.map(
-    //       prato => `${prato.nome} do restaurante ${restaurant.titulo}`,
-    //     ),
-    //   )
-    //   .join(', ')}.
-    // A avaliação dos restaurantes: ${restaurants
-    //   .map(restaurant => `${restaurant.titulo}: ${restaurant.avaliacao}`)
-    //   .join(', ')}.`)
-
-    const reader = response.textStream.getReader()
-
-    // Simulate typing and start streaming the response
-    const readAndSend = async () => {
-      try {
-        while (true) {
-          const { done, value } = await reader.read()
-          if (done) break
-          await simulateTyping(value.replace(/[*_`]/g, ''), res)
-        }
-        res.end() // Finish the response after sending all blocks
-      } catch (error) {
-        console.error('Error reading stream:', error)
-        res.status(500).send('Internal Server Error')
-      }
-    }
-
-    // End the response after sending all blocks
-    readAndSend()
-      .then(() => {
-        res.end()
-      })
-      .catch(error => {
-        console.error('Error reading stream:', error)
-        res.status(500).send('Internal Server Error')
-      })
+    res.send(text)
   } catch (error) {
     console.error('Error generating text:', error)
-    return res.status(500).send('Internal Server Error')
+    res.status(500).send('Internal Server Error')
   }
 })
 
+interface PredefinedPrompts {
+  [key: string]: string
+}
+
+const predefinedPrompts: PredefinedPrompts = {
+  'quais são os restaurantes em destaque da semana?':
+    'Os restaurantes em destaque esta semana são Bella Tavola Italiana e Jardim da Terra como uma otima opção vegana.',
+
+  'quais formas de pagamento são aceitas?':
+    'Aceitamos pagamento com cartão de crédito e débito das bandeiras Visa, MasterCard, e American Express. Além disso, também aceitamos pagamento via boleto bancário.',
+}
+
+const getPredefinedResponse = (content: string): string | null => {
+  const cleanedContent = content.toLowerCase().trim()
+  return predefinedPrompts[cleanedContent] || null
+}
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
+})
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', error => {
+  console.error('Unhandled promise rejection:', error)
 })

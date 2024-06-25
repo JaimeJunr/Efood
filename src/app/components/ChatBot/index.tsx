@@ -1,7 +1,6 @@
 import * as S from './styles'
 import { useState, useEffect, useRef } from 'react'
 import { useChat } from 'ai/react'
-import { useGetRestaurantsQuery } from '../../services/api'
 
 import MessageSquare from '../../assets/Svg/message-square.svg'
 import Send from '../../assets/Svg/send.svg'
@@ -22,15 +21,10 @@ export default function Chatbot() {
   const [messageCount, setMessageCount] = useState(0)
   const [page, setPage] = useState(3)
 
-  const { data: restaurants } = useGetRestaurantsQuery()
-
   const { messages, input, handleInputChange, isLoading, append, setInput } =
     useChat({
-      api: 'http://localhost:3333/api/chatbot',
+      api: '/api',
       streamMode: 'text',
-      body: {
-        restaurants: restaurants,
-      },
     })
 
   const toggleChat = () => setChatOpen(!chatOpen)
@@ -39,10 +33,17 @@ export default function Chatbot() {
     append({ content: prompt, role: 'user' })
   }
 
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+  const chatContainerRef = useRef<HTMLDivElement>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
+  }
+
+  useEffect(() => {
+    scrollToBottom()
   }, [messages])
 
   useEffect(() => {
@@ -60,8 +61,6 @@ export default function Chatbot() {
   useEffect(() => {
     optionsPronpt()
   }, [page])
-
-  const chatContainerRef = useRef<HTMLDivElement>(null)
 
   return (
     <>
@@ -100,7 +99,7 @@ export default function Chatbot() {
                   )}
                 </div>
               ))}
-
+              <div ref={messagesEndRef} />
               <S.Message className={showSupportButton ? 'disabled' : ''}>
                 <S.Avatar src='https://cdn-icons-png.flaticon.com/512/149/149071.png' />
                 <S.AIMessage>

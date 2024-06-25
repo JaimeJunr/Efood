@@ -75,6 +75,7 @@ export const ChatContainer = styled.div`
   height: 100%;
   padding: 0.75rem 1rem;
   background-color: ${Colors.white};
+  overflow: hidden; // Ensure content doesn't overflow the container
 `
 
 export const Header = styled.div`
@@ -109,12 +110,10 @@ export const ClosedButon = styled(ClearIcon)`
 export const Messages = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   width: 100%;
   height: 100%;
   padding: 0.75rem 1rem;
-  overflow-y: scroll;
-  scrollbar-width: thin;
+  overflow-y: auto; // Enable vertical scrolling if content overflows
 `
 
 export const Message = styled.div`

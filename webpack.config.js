@@ -1,48 +1,26 @@
 const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production'
 
   const config = {
-    entry: './src/index.tsx',
+    entry: './src/app/index.tsx',
     output: {
-      filename: 'bundle.js',
       path: path.resolve(__dirname, 'dist'),
+      filename: 'bundle.js',
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
     },
-    devServer: {
-      static: {
-        directory: path.join(__dirname, 'public'),
-      },
-      compress: true,
-      port: 9000,
-    },
-
     module: {
       rules: [
         {
           test: /\.(ts|tsx)$/,
           exclude: /node_modules/,
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                presets: [
-                  '@babel/preset-env',
-                  '@babel/preset-react',
-                  '@babel/preset-typescript',
-                ],
-              },
-            },
-            {
-              loader: 'ts-loader',
-            },
-          ],
+          use: ['babel-loader', 'ts-loader'],
         },
         {
           test: /\.svg$/i,
@@ -50,7 +28,7 @@ module.exports = (env, argv) => {
           use: ['@svgr/webpack'],
         },
         {
-          test: /\.(png|jpg?g|gif)$/i,
+          test: /\.(png|jpg|jpeg|gif)$/i,
           type: 'asset',
         },
       ],
@@ -61,7 +39,7 @@ module.exports = (env, argv) => {
     devtool: isProduction ? false : 'source-map',
     plugins: [
       new HtmlWebpackPlugin({
-        template: './public/index.html',
+        template: 'src/app/index.html',
         minify: isProduction
           ? {
               collapseWhitespace: true,
@@ -73,10 +51,8 @@ module.exports = (env, argv) => {
             }
           : false,
       }),
+      new Dotenv(),
     ],
-    resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-    },
   }
 
   if (isProduction) {

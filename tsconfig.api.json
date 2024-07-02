@@ -1,5 +1,4 @@
 {
-  "files": ["globals.d.ts"],
   "compilerOptions": {
     "target": "ES6",
     "module": "commonjs",
@@ -8,13 +7,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
+    "rootDir": "./src",
     "resolveJsonModule": true
   },
-  "include": ["src/**/*", "src/api/services"],
+  "include": ["src/api/**/*"],
   "exclude": ["node_modules"]
 }

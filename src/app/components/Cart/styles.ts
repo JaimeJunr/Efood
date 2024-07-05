@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { Colors } from '../../styles'
-import { TagContain } from '../Tag/styles'
 import { ButtonContain } from '../Button/styles'
 
 export const Overlay = styled.div`
@@ -115,5 +114,28 @@ export const CartItem = styled.li`
       width: 100%;
       height: 100%;
     }
+  }
+`
+
+export const Sucess = styled.div`
+  display: block;
+  align-items: center;
+  height: 100%;
+  padding-bottom: 40px;
+
+  h2 {
+    color: ${Colors.white};
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 21px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    color: ${Colors.white};
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    margin-bottom: 14px;
   }
 `

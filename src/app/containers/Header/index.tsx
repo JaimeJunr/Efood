@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom'
 import { Container } from '../../styles'
 import { Restaurant } from '../../models/Restaurant'
 
-import { hadleOpen } from '../../store/reducers/cartSlice'
+import { handleOpen } from '../../store/reducers/cartSlice'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
+import { Skeleton } from '@mui/material'
 
 export type Props = {
   home?: boolean
@@ -39,17 +40,23 @@ export default function Header({ home, restaurant }: Props) {
               <Link to={'/'}>
                 <Logo />
               </Link>
-              <S.HeaderPerfil onClick={() => dispatch(hadleOpen())}>
+              <S.HeaderPerfil onClick={() => dispatch(handleOpen())}>
                 {items.length} produto(s) no carrinho
               </S.HeaderPerfil>
             </Container>
           </S.Header>
-          <S.ImageContainer restaurant={restaurant}>
-            <Container>
-              <S.RestaurantTitle category>{restaurant?.tipo}</S.RestaurantTitle>
-              <S.RestaurantTitle>{restaurant?.titulo}</S.RestaurantTitle>
-            </Container>
-          </S.ImageContainer>
+          {restaurant ? (
+            <S.ImageContainer restaurant={restaurant}>
+              <Container>
+                <S.RestaurantTitle category>
+                  {restaurant?.tipo}
+                </S.RestaurantTitle>
+                <S.RestaurantTitle>{restaurant?.titulo}</S.RestaurantTitle>
+              </Container>
+            </S.ImageContainer>
+          ) : (
+            <Skeleton variant='rectangular' width={'100%'} height={280} />
+          )}
         </>
       )}
     </>

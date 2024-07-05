@@ -2,9 +2,9 @@ import * as S from './styles'
 import { MenuItem } from '../../models/Restaurant'
 
 import Fade from '@mui/material/Fade'
-import { formatPrice } from '../../App'
+import { formatPrice } from '../../utils'
 import Button from '../Button'
-import { add } from '../../store/reducers/cartSlice'
+import { add, handleOpen } from '../../store/reducers/cartSlice'
 import { useDispatch } from 'react-redux'
 
 export type PropsModal = {
@@ -15,6 +15,12 @@ export type PropsModal = {
 
 export default function ModalProduct({ open, onClose, product }: PropsModal) {
   const dispatch = useDispatch()
+
+  const onClickButton = () => {
+    dispatch(handleOpen())
+    dispatch(add(product))
+    onClose()
+  }
 
   if (!product) return null
 
@@ -38,7 +44,7 @@ export default function ModalProduct({ open, onClose, product }: PropsModal) {
             <S.Description>Serve {product.porcao}</S.Description>
 
             <Button
-              onClick={() => dispatch(add(product))}
+              onClick={onClickButton}
               title='Clique para adicionar ao carrinho'
               type='button'
             >

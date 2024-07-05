@@ -11,7 +11,7 @@ const predefinedPrompts = [
   'Quais formas de pagamento são aceitas?',
   'Qual é o restaurante mais bem avaliado?',
   'Quais são os 5 restaurantes mais bem avaliados?',
-  'Quais são os pratos mais bem avaliados?',
+  'Vocês possuem Pizza no cardapio?',
 ]
 
 export default function Chatbot() {
@@ -26,6 +26,12 @@ export default function Chatbot() {
       api: '/api',
       streamMode: 'text',
     })
+
+  // const { messages, input, handleInputChange, isLoading, append, setInput } =
+  //   useChat({
+  //     api: 'http://localhost:3333/api',
+  //     streamMode: 'text',
+  //   })
 
   const toggleChat = () => setChatOpen(!chatOpen)
 
@@ -65,6 +71,9 @@ export default function Chatbot() {
   return (
     <>
       <S.ButtonToTalk
+        type='button'
+        aria-label='Chatbot'
+        title='Chatbot'
         className={chatOpen ? 'is-open' : ''}
         onClick={toggleChat}
       >
@@ -83,17 +92,23 @@ export default function Chatbot() {
                   {msg.role === 'user' ? (
                     <S.Message>
                       <S.UserMessage>
-                        <span>Você </span>
+                        <span>Você</span>
                         <p>{msg.content}</p>
                       </S.UserMessage>
-                      <S.Avatar src='https://cdn-icons-png.flaticon.com/512/149/149071.png' />
+                      <S.Avatar
+                        alt='Você'
+                        src='https://cdn-icons-png.flaticon.com/512/149/149071.png'
+                      />
                     </S.Message>
                   ) : (
                     <S.Message>
-                      <S.Avatar src='https://cdn-icons-png.flaticon.com/512/149/149071.png' />
+                      <S.Avatar
+                        alt='Assistente'
+                        src='https://cdn-icons-png.flaticon.com/512/149/149071.png'
+                      />
                       <S.AIMessage>
                         <span>Assistente </span>
-                        <p>{msg.content}</p>
+                        <p dangerouslySetInnerHTML={{ __html: msg.content }} />
                       </S.AIMessage>
                     </S.Message>
                   )}
@@ -101,7 +116,10 @@ export default function Chatbot() {
               ))}
               <div ref={messagesEndRef} />
               <S.Message className={showSupportButton ? 'disabled' : ''}>
-                <S.Avatar src='https://cdn-icons-png.flaticon.com/512/149/149071.png' />
+                <S.Avatar
+                  alt=' Assistente '
+                  src='https://cdn-icons-png.flaticon.com/512/149/149071.png'
+                />
                 <S.AIMessage>
                   <span>Assistente </span>
                   <p>
@@ -136,6 +154,7 @@ export default function Chatbot() {
             {predefinedPrompts.slice(page - 3, page).map((prompt, index) => (
               <S.PromptButton
                 disabled={isLoading}
+                title={`Clique para gerar essa resposta: ${prompt}`}
                 key={index}
                 onClick={() => handlePromptClick(prompt)}
               >
@@ -177,6 +196,9 @@ export default function Chatbot() {
               />
               <S.Button
                 disabled={isLoading}
+                type='button'
+                aria-label='Enviar'
+                title='Enviar'
                 onClick={async () => {
                   if (input) {
                     append({ content: input, role: 'user' })

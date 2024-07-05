@@ -21,17 +21,17 @@ export default function Chatbot() {
   const [messageCount, setMessageCount] = useState(0)
   const [page, setPage] = useState(3)
 
-  // const { messages, input, handleInputChange, isLoading, append, setInput } =
-  //   useChat({
-  //     api: '/api',
-  //     streamMode: 'text',
-  //   })
-
   const { messages, input, handleInputChange, isLoading, append, setInput } =
     useChat({
-      api: 'http://localhost:3333/api',
+      api: '/api',
       streamMode: 'text',
     })
+
+  // const { messages, input, handleInputChange, isLoading, append, setInput } =
+  //   useChat({
+  //     api: 'http://localhost:3333/api',
+  //     streamMode: 'text',
+  //   })
 
   const toggleChat = () => setChatOpen(!chatOpen)
 

@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 import Header from '../containers/Header'
 import ListRestaurant from '../containers/ListRestaurant'
 
@@ -9,8 +7,6 @@ import { useGetRestaurantsQuery } from '../services/api'
 
 export default function Home() {
   const { data: restaurants } = useGetRestaurantsQuery()
-
-  if (!restaurants) return <h3>Loading</h3>
 
   return (
     <>

@@ -11,13 +11,6 @@ import { Provider } from 'react-redux'
 import { store } from './store'
 import ChatBox from './components/ChatBot'
 
-export const formatPrice = (preco = 0) => {
-  return new Intl.NumberFormat('pt-br', {
-    style: 'currency',
-    currency: 'BRL',
-  }).format(preco)
-}
-
 export default function App() {
   return (
     <Provider store={store}>

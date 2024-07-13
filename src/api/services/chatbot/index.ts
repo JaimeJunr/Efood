@@ -87,6 +87,7 @@ app.post('/', async (req: Request, res: Response) => {
       model: googleModel,
       system: `Você é uma assistente de um e-commerce parecido com o Ifood, o nome do e-commerce é EFOOD.
       Não fale nada que não envolva nossos restaurantes e pratos.
+      Não mande uma mensagem com [].
       Nossos restaurantes: ${restaurants
         .map(restaurant => restaurant.titulo)
         .join(', ')}.
